@@ -47,8 +47,8 @@ module.exports = {
          *                                                                          *
          ***************************************************************************/
         default: {
-            // adapter: 'sails-mysql',
-            // url: 'mysql://user:password@host:port/database',
+            adapter: 'sails-mysql',
+            url: 'mysql://u854977660_yimmy:yimmy123@sql142.main-hosting.eu:3306/u854977660_prp',
             //--------------------------------------------------------------------------
             //  /\   To avoid checking it in to version control, you might opt to set
             //  ||   sensitive credentials like `url` using an environment variable.
@@ -328,7 +328,7 @@ module.exports = {
      * this, just try deploying without setting it and see if it works.)       *
      *                                                                         *
      ***************************************************************************/
-    // port: 80,
+    port: 8080,
 
 
     /**************************************************************************
@@ -360,8 +360,8 @@ module.exports = {
      *                                                                         *
      ***************************************************************************/
     custom: {
-        baseUrl: 'https://example.com',
-        internalEmailAddress: 'support@example.com',
+        baseUrl: 'http://sailsapp-prp.a3c1.starter-us-west-1.openshiftapps.com/',
+        internalEmailAddress: 'support@sailsapp-prp.a3c1.starter-us-west-1.openshiftapps.com/',
 
         // mailgunDomain: 'mg.example.com',
         // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
