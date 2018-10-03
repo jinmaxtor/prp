@@ -1,0 +1,284 @@
+<!-- Page -->
+<div class="page">
+    <div class="page-header">
+        <h1 class="page-title">Cuentas</h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Finanzas</a></li>
+            <li class="breadcrumb-item active">Cuentas</li>
+        </ol>
+        <div class="page-header-actions">
+            <button type="button" class="btn btn-sm btn-icon btn-primary btn-round" data-toggle="tooltip"
+                    data-original-title="Edit">
+                <i class="icon md-edit" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-icon btn-primary btn-round" data-toggle="tooltip"
+                    data-original-title="Refresh">
+                <i class="icon md-refresh-alt" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-icon btn-primary btn-round" data-toggle="tooltip"
+                    data-original-title="Setting">
+                <i class="icon md-settings" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <!-- Panel Form Elements -->
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Nueva Cuenta</h3>
+            </div>
+            <div class="panel-body">
+                <form id="formulario" action="">
+                    <div class="form-group row">
+                        <div class="col-md-6 col-lg-3">
+                            <h4 class="example-title">Nombre</h4>
+                            <input name="nombre" required type="text" class="form-control" id="inputNombre"
+                                   placeholder="Ingrese el nombre">
+                        </div>
+
+                        <div class="col-md-6 col-lg-3">
+                            <h4 class="example-title">Moneda</h4>
+                            <select name="moneda" required id="selectMoneda" class="form-control selector-a"
+                                    data-plugin="select2">
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-lg-3">
+                            <h4 class="example-title">Por Defecto</h4>
+                            <div class="checkbox-custom checkbox-primary">
+                                <input name="porDefecto" type="checkbox" step="any" id="inputPorDefecto" checked>
+                                <label for="inputPorDefecto">Cuenta por defecto</label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6 col-lg-3">
+                            <h4 class="example-title">Balance</h4>
+                            <input name="balance" required type="number" step="any" title="Balance" class="form-control"
+                                   id="inputBalance">
+                        </div>
+
+                        <div class="col-md-6 col-lg-3">
+                            <h4 class="example-title">Icono</h4>
+                            <input name="icono" required type="text" class="form-control" id="inputIcono"
+                                   placeholder="Ingrese el nombre icono">
+                        </div>
+
+                        <div class="col-md-6 col-lg-3">
+                            <h4 class="example-title">Opciones</h4>
+                            <div>
+                                <button id="submitButton" type="submit"
+                                        class="col-md-6 form-control btn btn-primary waves-effect waves-light waves-round">
+                                    Guardar
+                                    Cambios
+                                </button>
+                                <button id="resetButton" type="reset"
+                                        class="col-md-5 form-control btn btn-primary waves-effect waves-light waves-round">
+                                    Limpiar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End Panel Form Elements -->
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Listado de las cuentas</h3>
+            </div>
+            <div class="panel-body">
+                <div id="tabla">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Page -->
+
+<script>
+    window.onload = function () {
+
+        var inputNombre = $('#inputNombre');
+        var selectMoneda = $('#selectMoneda');
+        var inputPorDefecto = $('#inputPorDefecto');
+        var inputBalance = $('#inputBalance');
+        var inputIcono = $('#inputIcono');
+        var submintButton = $('#submitButton');
+        var resetButton = $('#resetButton');
+        var formulario = $('#formulario');
+
+        var idCuenta = null;
+
+        var monedas = <%- JSON.stringify(vista.datos.monedas) %>;
+        var datosMonedas = [];
+        monedas.forEach(function (element) {
+            datosMonedas.push({id: element.id, text: element.nombre});
+        })
+
+        console.log(datosMonedas);
+
+        selectMoneda.select2({
+            data: datosMonedas
+        });
+
+        /*selectCategoria.select2({
+            data: [
+                {id: 1, text: 'Servicios Basicos'},
+                {id: 2, text: 'Pasajes'},
+                {id: 3, text: 'Comida'},
+                {id: 4, text: 'ropa'},
+                {id: 5, text: 'Bebida'}
+            ]
+        });*/
+
+        var miLoadStrategy = function (grid) {
+            jsGrid.loadStrategies.PageLoadingStrategy.call(this, grid);
+        };
+
+        miLoadStrategy.prototype = new jsGrid.loadStrategies.PageLoadingStrategy();
+
+        miLoadStrategy.prototype.sort = function () {
+            this._grid._sortData();
+            this._grid.refresh();
+            return $.Deferred().resolve().promise();
+        }
+
+        /*miLoadStrategy.prototype.finishDelete = function(deletedItem, deletedItemIndex) {
+            var grid = this._grid;
+            grid.option("data").splice(deletedItemIndex, 1);
+            grid.refresh();
+        };*/
+
+        jsGrid.locale("es");
+
+        $('#tabla').jsGrid({
+
+            loadStrategy: function () {
+                return new miLoadStrategy(this);
+            },
+
+            width: "100%",
+            height: "300px",
+            sorting: true,
+            pageLoading: true,
+
+            controller: {
+                loadData: function (filter) {
+                    return $.ajax({
+                        type: 'GET',
+                        url: '/cuenta/listar/ajax=true',
+                        dataType: 'json'
+                    });
+                },
+                deleteItem: function (item) {
+                    console.log(item);
+                    return $.ajax({
+                        type: 'POST',
+                        url: '/cuenta/eliminar',
+                        dataType: 'json'
+                    });
+                }
+            },
+
+            data: <%- JSON.stringify(vista.datos.cuentas) %>,
+            fields: [
+                {title: "id", name: "id", type: "number", width: 40, visible: true},
+                {title: "Nombre", name: "nombre", type: "text", width: 150, validate: "required"},
+                {title: "Balance", name: "balance", type: "number", width: 60},
+                {title: "Icono", name: "icono", type: "text", width: 150, validate: "required"},
+                {title: "Por Defecto", name: "porDefecto", type: "checkbox", width: 150, validate: "required"},
+                {
+                    title: "Moneda",
+                    name: "moneda",
+                    type: "select",
+                    items: datosMonedas,
+                    valueField: "id",
+                    textField: "text",
+                    width: 80
+                },
+                {type: "control", editButton: false, modeSwitchButton: false},
+            ],
+
+            rowClick: function (args) {
+                console.log(args);
+                let item = args.item;
+
+                idCuenta = item.id;
+
+
+                inputNombre.val(item.nombre);
+                selectMoneda.val(item.moneda).change();
+                if (item.porDefecto) {
+                    inputPorDefecto.prop('checked', true);
+                } else {
+                    inputPorDefecto.prop('checked', false);
+                }
+                inputBalance.val(item.balance);
+                inputIcono.val(item.icono);
+
+            },
+        });
+
+        submintButton.click(function (event) {
+            if (formulario[0].checkValidity()) {
+                event.preventDefault();
+                console.log("holas de mar");
+
+
+                let datosForm = $('#formulario').serializeArray();
+                console.log(datosForm);
+                let datos = {};
+                datosForm.forEach(function (dato, index, array) {
+                    datos[dato.name] = dato.value;
+                });
+
+                if (!datos.porDefecto) {
+                    datos.porDefecto = 0;
+                } else {
+                    datos.porDefecto = 1;
+                }
+
+                let url = '/cuenta/adicionar';
+
+                if (idCuenta != null) {
+                    url = '/cuenta/editar';
+                    datos.id = idCuenta;
+                }
+
+
+                console.log(datos);
+
+                $.post({
+                    url: url,
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(datos),
+                    dataType: 'json',
+                    success: function (data, status, xhr) {
+                        console.log(data);
+                        if (data.terminado) {
+                            $('#tabla').jsGrid("loadData");
+                            //$('#tabla').jsGrid("refresh");
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        console.log(errorMessage);
+                        console.log("ERROR-------------");
+                    }
+                });
+            } else {
+                formulario[0].reportValidity();
+            }
+
+        });
+
+        resetButton.click(function (event) {
+            idCuenta = null;
+        });
+
+    }
+</script>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="bootstrap material admin template">
+    <meta name="author" content="">
+
+    <title>Dashboard | Remark Material Admin Template</title>
+
+    <link rel="apple-touch-icon" href="/remark/assets/images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/remark/assets/images/favicon.ico">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/remark/global/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/remark/global/css/bootstrap-extend.min.css">
+    <link rel="stylesheet" href="/remark/assets/css/site.min.css">
+
+    <!-- Plugins -->
+    <link rel="stylesheet" href="/remark/global/vendor/animsition/animsition.css">
+    <link rel="stylesheet" href="/remark/global/vendor/asscrollable/asScrollable.css">
+    <link rel="stylesheet" href="/remark/global/vendor/switchery/switchery.css">
+    <link rel="stylesheet" href="/remark/global/vendor/intro-js/introjs.css">
+    <link rel="stylesheet" href="/remark/global/vendor/slidepanel/slidePanel.css">
+    <link rel="stylesheet" href="/remark/global/vendor/flag-icon-css/flag-icon.css">
+    <link rel="stylesheet" href="/remark/global/vendor/waves/waves.css">
+
+    <% if (vista.login || false) { /* si es pagina login*/ %>
+    <link rel="stylesheet" href="/remark/assets/examples/css/pages/login-v2.css">
+    <% } %>
+
+    <% if (vista.register || false) { /* si es pagina registro*/ %>
+    <link rel="stylesheet" href="/remark/assets/examples/css/pages/register-v2.css">
+    <% } %>
+
+    <% if (vista.dashboard || false) { /* si es pagina dashboard*/ %>
+    <link rel="stylesheet" href="/remark/global/vendor/chartist/chartist.css">
+    <link rel="stylesheet" href="/remark/global/vendor/jvectormap/jquery-jvectormap.css">
+    <link rel="stylesheet" href="/remark/global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
+    <link rel="stylesheet" href="/remark/assets/examples/css/dashboard/v1.css">
+    <% } %>
+
+    <!-- si es pagina perfil -->
+    <% if (vista.perfil || false) { %>
+        <link rel="stylesheet" href="/remark/assets/examples/css/pages/profile.css">
+    <% } %>
+
+    <!-- si es pagina evento -->
+    <% if (vista.evento || false) { %>
+        <link rel="stylesheet" href="/remark/global/vendor/jsgrid/jsgrid.css">
+        <link rel="stylesheet" href="/remark/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="/remark/assets/examples/css/tables/jsgrid.css">
+    <% } %>
+
+    <% if (vista.ingreso || false) { %>
+        <link rel="stylesheet" href="/remark/global/vendor/select2/select2.css">
+        <link rel="stylesheet" href="/remark/global/vendor/jsgrid/jsgrid.css">
+    <% } %>
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="/remark/global/fonts/material-design/material-design.min.css">
+    <link rel="stylesheet" href="/remark/global/fonts/brand-icons/brand-icons.min.css">
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="/styles/estilos.css">
+
+    <!--[if lt IE 9]>
+    <script src="/remark/global/vendor/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!--[if lt IE 10]>
+    <script src="/remark/global/vendor/media-match/media.match.min.js"></script>
+    <script src="/remark/global/vendor/respond/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Scripts -->
+    <script src="/remark/global/vendor/breakpoints/breakpoints.js"></script>
+    <script>
+        Breakpoints();
+    </script>
+</head>
+<% var pageClass = ""; %>
+
+<% if (vista.login || false) { %>
+    <% pageClass = "animsition page-login-v2 layout-full page-dark"; %>
+<% } %>
+
+<% if (vista.register || false) { %>
+    <% pageClass = "animsition page-register-v2 layout-full page-dark"; %>
+<% } %>
+
+<% if (vista.dashboard || false) { %>
+    <% pageClass = "animsition dashboard"; %>
+<% } %>
+
+<% if (vista.perfil || false) { %>
+    <% pageClass = "animsition page-profile"; %>
+<% } %>
+
+<% if (vista.evento || false) { %>
+    <% pageClass = "animsition"; %>
+<% } %>
+
+<% if (vista.ingreso || false) { %>
+    <% pageClass = "animsition" %>
+<% } %>
+
+<body class="<%= pageClass %>">
+
+<% if (vista.login || false) { %>
+    <!-- Page -->
+    <%- body %>
+    <!-- End Page -->
+<% } %>
+
+<% if (vista.register || false) { %>
+    <!-- Page -->
+    <%- body %>
+    <!-- End Page -->
+<% } %>
+
+<% if (vista.otro || false) { %>
+    <!-- Header -->
+    <%- partial('./partials/Header.ejs') %>
+    <!-- End Header -->
+
+    <!-- Sidebar -->
+    <%- partial('./partials/Sidebar.ejs') %>
+    <!-- End Sidebar -->
+
+    <!-- Page -->
+    <%- body %>
+    <!-- End Page -->
+
+    <!-- Footer -->
+    <%- partial('./partials/Footer.ejs') %>
+    <!-- End Footer -->
+<% } %>
+
+<!-- Core  -->
+<script src="/remark/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
+<script src="/remark/global/vendor/jquery/jquery.js"></script>
+<script src="/remark/global/vendor/popper-js/umd/popper.min.js"></script>
+<script src="/remark/global/vendor/bootstrap/bootstrap.js"></script>
+<script src="/remark/global/vendor/animsition/animsition.js"></script>
+<script src="/remark/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+<script src="/remark/global/vendor/asscrollbar/jquery-asScrollbar.js"></script>
+<script src="/remark/global/vendor/asscrollable/jquery-asScrollable.js"></script>
+<script src="/remark/global/vendor/waves/waves.js"></script>
+
+<!-- Plugins -->
+<script src="/remark/global/vendor/switchery/switchery.js"></script>
+<script src="/remark/global/vendor/intro-js/intro.js"></script>
+<script src="/remark/global/vendor/screenfull/screenfull.js"></script>
+<script src="/remark/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+<% if (vista.login || false) { /* es pagina login*/ %>
+<script src="/remark/global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+<% } %>
+
+<% if (vista.register || false) { /* es pagina register*/ %>
+<script src="/remark/global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+<% } %>
+
+<% if (vista.dashboard || false) { /* es pagina dashboard*/ %>
+<script src="/remark/global/vendor/chartist/chartist.min.js"></script>
+<script src="/remark/global/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.js"></script>
+<script src="/remark/global/vendor/jvectormap/jquery-jvectormap.min.js"></script>
+<script src="/remark/global/vendor/jvectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+<script src="/remark/global/vendor/matchheight/jquery.matchHeight.min.js"></script>
+<script src="/remark/global/vendor/peity/jquery.peity.min.js"></script>
+<% } %>
+
+<% if (vista.perfil || false) { /* si es pagina perfil*/ %>
+
+<% } %>
+
+<% if (vista.evento || false) { /* si es pagina evento*/ %>
+<script src="/remark/global/vendor/jsgrid/jsgrid.js"></script>
+<script src="/remark/global/vendor/jquery-ui/jquery-ui.min.js"></script>
+<script src="/remark/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<% } %>
+
+<% if (vista.ingreso || false) { %>
+    <script src="/remark/global/vendor/select2/select2.full.min.js"></script>
+    <script src="/remark/global/vendor/select2/locales/es.js"></script>
+    <script src="/remark/global/vendor/jsgrid/jsgrid.js"></script>
+    <script src="/remark/global/vendor/jsgrid/locales/jsgrid-es.js"></script>
+<% } %>
+
+<!-- Scripts -->
+<script src="/remark/global/js/Component.js"></script>
+<script src="/remark/global/js/Plugin.js"></script>
+<script src="/remark/global/js/Base.js"></script>
+<script src="/remark/global/js/Config.js"></script>
+
+<script src="/remark/assets/js/Section/Menubar.js"></script>
+<script src="/remark/assets/js/Section/Sidebar.js"></script>
+<script src="/remark/assets/js/Section/PageAside.js"></script>
+<script src="/remark/assets/js/Plugin/menu.js"></script>
+
+<!-- Config -->
+<script src="/remark/global/js/config/colors.js"></script>
+<script src="/remark/assets/js/config/tour.js"></script>
+<script>Config.set('assets', './assets');</script>
+
+<!-- Page -->
+<script src="/remark/assets/js/Site.js"></script>
+<script src="/remark/global/js/Plugin/asscrollable.js"></script>
+<script src="/remark/global/js/Plugin/slidepanel.js"></script>
+<script src="/remark/global/js/Plugin/switchery.js"></script>
+
+<% if (vista.login || false) { /* es pagina login*/ %>
+<script src="/remark/global/js/Plugin/jquery-placeholder.js"></script>
+<script src="/remark/global/js/Plugin/material.js"></script>
+<script>
+    (function (document, window, $) {
+        'use strict';
+
+        var Site = window.Site;
+        $(document).ready(function () {
+            Site.run();
+        });
+    })(document, window, jQuery);
+</script>
+<% } %>
+
+<% if (vista.register || false) { /* es pagina register*/ %>
+<script src="/remark/global/js/Plugin/jquery-placeholder.js"></script>
+<script src="/remark/global/js/Plugin/animate-list.js"></script>
+<script src="/remark/global/js/Plugin/material.js"></script>
+<script>
+    (function (document, window, $) {
+        'use strict';
+
+        var Site = window.Site;
+        $(document).ready(function () {
+            Site.run();
+        });
+    })(document, window, jQuery);
+</script>
+<% } %>
+
+<% if (vista.dashboard || false) { /* es pagina dashboard*/ %>
+<script src="/remark/global/js/Plugin/matchheight.js"></script>
+<script src="/remark/global/js/Plugin/jvectormap.js"></script>
+<script src="/remark/global/js/Plugin/peity.js"></script>
+
+<script src="/remark/assets/examples/js/dashboard/v1.js"></script>
+<% } %>
+
+<% if (vista.perfil || false) { %>
+    <script src="/remark/global/js/Plugin/responsive-tabs.js"></script>
+    <script src="/remark/global/js/Plugin/tabs.js"></script>
+<% } %>
+
+<% if (vista.evento || false) { %>
+    <script src="/remark/assets/examples/js/tables/jsgrid-db.js"></script>
+    <script src="/remark/assets/examples/js/tables/jsgrid.js"></script>
+<% } %>
+
+<% if (vista.ingreso || false) { %>
+    <script>
+        (function (document, window, $) {
+            'use strict';
+
+            var Site = window.Site;
+            $(document).ready(function () {
+                Site.run();
+            });
+        })(document, window, jQuery);
+    </script>
+<% } %>
+
+</body>
+</html>

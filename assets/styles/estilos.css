@@ -1,0 +1,7 @@
+/* CORRECCIONES PLANTILLA */
+#toggleMenubar > a > i {
+    vertical-align: initial !important;
+    top: 2px !important;
+}
+
+/* FIN CORRECCIONES PLANTILLA */
